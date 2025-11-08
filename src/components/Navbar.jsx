@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FiLogIn } from "react-icons/fi";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
+import { BounceLoader } from "react-spinners";
 
 const Navbar = () => {
+  const { loading, user, setUser, signOutFunc } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    signOutFunc()
+      .then(() => {
+        toast.success("Log Out Successful");
+        setUser(null);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error(error.message);
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -59,13 +76,39 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">ToyTopia</a>
+        <a className="btn btn-ghost text-xl">Toyzy</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        <Link to='/login' className="btn"><FiLogIn /><span>Sign In</span></Link>
+        {loading ? (
+          <BounceLoader color="#254444" size={40}/>
+        ) : user ? (
+          <div className="dropdown dropdown-hover dropdown-end">
+            <div tabIndex={0} role="" className="btn m-1">
+              <img
+                src={user.photoURL}
+                className="h-10 w-10 rounded-full"
+                alt="User"
+              />
+            </div>
+            <ul
+              tabIndex="-1"
+              className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+            >
+              <p className="text-center font-semibold">{user.displayName}</p>
+              <button onClick={handleLogOut} className="btn btn-primary">
+                Log Out
+              </button>
+            </ul>
+          </div>
+        ) : (
+          <Link to="/login" className="btn">
+            <FiLogIn />
+            <span>Sign In</span>
+          </Link>
+        )}
       </div>
     </div>
   );

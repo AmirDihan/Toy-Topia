@@ -1,55 +1,68 @@
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import React, { useState } from "react";
-import { Link } from "react-router";
+import React, { useState, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { auth } from "../firebase/firebase.config";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-
-const provider = new GoogleAuthProvider();
+import { AuthContext } from "./../Context/AuthContext";
 
 const Login = () => {
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState(null);
+  const location = useLocation();
+  const from = location.state || "/";
+  const navigate = useNavigate();
+
+  console.log(location)
+  const {
+    user,
+    setUser,
+    signInWithEmailAndPasswordFunc,
+    signOutFunc,
+    signInWithGooglePopupFunc,
+    setLoading,
+  } = useContext(AuthContext);
+
+  if(user)
+  {
+    navigate('/')
+    return;
+  }
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPasswordFunc(email, password)
       .then((res) => {
-        console.log(res.user);
+        setLoading(false);
         setUser(res.user);
+        navigate(from);
         toast.success("Login successful");
         e.target.reset();
       })
       .catch((error) => toast.error(error.message));
   };
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        toast.success("Sign Out Successful");
-        setUser(null);
-      })
-      .catch((error) => {
-        console.log(error.message)
-        toast.error(error.message)
-      });
-  };
   const handleGoogleLogIn = () => {
-    signInWithPopup(auth, provider)
+    signInWithGooglePopupFunc()
       .then((res) => {
-        console.log(res.user);
+        setLoading(false);
         setUser(res.user);
+        navigate(from);
         toast.success("Login successful using google");
       })
       .catch((error) => toast.error(error.message));
   };
+  const handleSignOut = () => {
+    signOutFunc(auth)
+      .then(() => {
+        toast.success("Log Out Successful");
+        setUser(null);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <div className="w-11/12 mx-auto card bg-base-100 max-w-sm shrink-0 shadow-2xl">
       {user ? (
