@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
@@ -23,10 +23,12 @@ const Register = () => {
   const navigate = useNavigate();
 
   // console.log(user)
-  if (user) {
-    navigate(from);
-    return;
-  }
+  useEffect(() => {
+    if (user) {
+      navigate(from);
+      return;
+    }
+  }, [user, from, navigate]);
   const handleSignupWithEmailPassword = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -46,27 +48,38 @@ const Register = () => {
 
     createUserWithEmailAndPasswordFunc(email, password)
       .then((res) => {
-        console.log(res.user);
-        setLoading(false);
-        updateProfileFunc(res.user, displayName, photoURL)
+        setUser(res.user);
+        setLoading(true);
+        updateProfileFunc(displayName, photoURL)
           .then(() => {
             sendEmailVerificationFunc(res.user)
               .then(() => {
-                console.log(res.user.emailVerified);
                 toast.success(
                   "Sign Up successful. Verify your email and login."
                 );
                 signOutFunc()
-                .then(() => {
-                  navigate("login");
-                })
-                .catch(e => toast.error(e.message))
+                  .then(() => {
+                    setLoading(false);
+                    setUser(null);
+                    navigate("login");
+                  })
+                  .catch((e) => {
+                    setLoading(false);
+                    toast.error(e.message);
+                  });
               })
-              .catch((error) => toast.error(error.message));
+              .catch((error) => {
+                setLoading(false);
+                toast.error(error.message);
+              });
           })
-          .catch((e) => toast.error(e.message));
+          .catch((e) => {
+            setLoading(false);
+            toast.error(e.message);
+          });
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error.message);
       });
   };
@@ -74,13 +87,13 @@ const Register = () => {
   const handleGoogleSignUp = () => {
     signInWithGooglePopupFunc()
       .then((res) => {
-        console.log(res.user);
         setLoading(false);
         setUser(res.user);
         toast.success("Sign Up with Google Successful");
         navigate(from);
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error.message);
       });
   };
@@ -96,6 +109,7 @@ const Register = () => {
               className="input"
               name="name"
               placeholder="Your name"
+              required
             />
             <label className="label">Photo Url</label>
             <input
@@ -103,6 +117,7 @@ const Register = () => {
               className="input"
               name="photo"
               placeholder="Photo Url"
+              required
             />
             <label className="label">Email</label>
             <input
@@ -110,6 +125,7 @@ const Register = () => {
               className="input"
               name="email"
               placeholder="Email"
+              required
             />
             <label className="label">Password</label>
             <input
@@ -117,6 +133,7 @@ const Register = () => {
               className="input"
               name="password"
               placeholder="Password"
+              required
             />
             <span
               onClick={() => setShow(!show)}

@@ -5,9 +5,9 @@ import Navbar from '../components/Navbar';
 
 const MainLayout = () => {
     return (
-        <div className='min-h-screen flex flex-col'>
+        <div className='min-h-screen flex flex-col mx-auto'>
           <Navbar></Navbar> 
-          <div className='flex-1'>
+          <div className='flex-1 max-w-11/12 mx-auto my-10'>
             <Outlet></Outlet>
           </div>
           <Footer></Footer> 

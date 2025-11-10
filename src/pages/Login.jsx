@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { auth } from "../firebase/firebase.config";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
@@ -11,8 +10,9 @@ const Login = () => {
   const location = useLocation();
   const from = location.state || "/";
   const navigate = useNavigate();
+  const emailRef = useRef();
 
-  console.log(location)
+  // console.log(location);
   const {
     user,
     setUser,
@@ -22,16 +22,18 @@ const Login = () => {
     setLoading,
   } = useContext(AuthContext);
 
-  if(user)
-  {
-    navigate('/')
-    return;
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+      return;
+    }
+  }, [user, from, navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    setLoading(true);
     signInWithEmailAndPasswordFunc(email, password)
       .then((res) => {
         setLoading(false);
@@ -40,9 +42,13 @@ const Login = () => {
         toast.success("Login successful");
         e.target.reset();
       })
-      .catch((error) => toast.error(error.message));
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error.message);
+      });
   };
   const handleGoogleLogIn = () => {
+    setLoading(true);
     signInWithGooglePopupFunc()
       .then((res) => {
         setLoading(false);
@@ -50,10 +56,13 @@ const Login = () => {
         navigate(from);
         toast.success("Login successful using google");
       })
-      .catch((error) => toast.error(error.message));
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error.message);
+      });
   };
   const handleSignOut = () => {
-    signOutFunc(auth)
+    signOutFunc()
       .then(() => {
         toast.success("Log Out Successful");
         setUser(null);
@@ -61,6 +70,12 @@ const Login = () => {
       .catch((error) => {
         toast.error(error.message);
       });
+  };
+
+  const handleForgetPassword = (e) => {
+    e.preventDefault();
+    const email = emailRef.current.value;
+    navigate("/forgot-password", { state: { email } });
   };
 
   return (
@@ -86,7 +101,9 @@ const Login = () => {
                 type="email"
                 className="input"
                 name="email"
+                ref={emailRef}
                 placeholder="Email"
+                required
               />
               <label className="label">Password</label>
               <input
@@ -94,9 +111,16 @@ const Login = () => {
                 className="input"
                 name="password"
                 placeholder="Password"
+                required
               />
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <button
+                  type="button"
+                  onClick={handleForgetPassword}
+                  className="link link-hover"
+                >
+                  Forgot password?
+                </button>
               </div>
               <span
                 onClick={() => setShow(!show)}

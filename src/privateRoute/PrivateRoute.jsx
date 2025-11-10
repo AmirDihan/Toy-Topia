@@ -6,12 +6,10 @@ import { Navigate, useLocation } from "react-router";
 const PrivateRoute = ({ children }) => {
   const { loading, user } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location)
-
   if (loading) {
     <BounceLoader color="#e74c3c" />;
   }
-  if (!user && !loading) {
+  if (!user) {
     return <Navigate to={"/login"} state={location.pathname}></Navigate>;
   }
   return children;

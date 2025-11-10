@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -30,8 +31,8 @@ const AuthProvider = ({ children }) => {
   const sendEmailVerificationFunc = (user) => {
     return sendEmailVerification(user);
   }
-  const updateProfileFunc = (user, displayName, photoURL) => {
-    return updateProfile(user, {
+  const updateProfileFunc = (displayName, photoURL) => {
+    return updateProfile(auth.currentUser, {
         displayName,
         photoURL
     })
@@ -45,10 +46,13 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+  const sendPasswordResetEmailFunc = (email) => {
+    return sendPasswordResetEmail(auth, email)
+  }
   useEffect(() => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+      // console.log(currentUser);
       setLoading(false);
       setUser(currentUser);
     });
@@ -69,6 +73,7 @@ const AuthProvider = ({ children }) => {
     signInWithGooglePopupFunc,
     sendEmailVerificationFunc,
     updateProfileFunc,
+    sendPasswordResetEmailFunc,
   };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
