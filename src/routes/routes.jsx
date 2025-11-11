@@ -7,6 +7,9 @@ import MyProfile from "../components/MyProfile";
 import PrivateRoute from "../privateRoute/PrivateRoute";
 import ForgetPassword from "../pages/ForgetPassword";
 import ErrorPage from "../pages/ErrorPage";
+import ToyDetails from "../components/ToyDetails";
+import { Suspense } from "react";
+import { DotLoader } from "react-spinners";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: "forgot-password",
         element: <ForgetPassword></ForgetPassword>,
+      },
+      {
+        path: "/toys/:id",
+        element: (
+          <PrivateRoute>
+            <ToyDetails></ToyDetails>
+          </PrivateRoute>
+        ),
       },
     ],
   },

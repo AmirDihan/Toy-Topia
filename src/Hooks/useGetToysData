@@ -1,0 +1,19 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const useGetToysData = () => {
+    const [data, setData] = useState([]);
+    const [loader, setLoader] = useState(true);
+    const [error, setError] = useState(null);
+    
+    useEffect(()=>{
+        setLoader(true)
+        axios('/toysData.json')
+        .then(res => setData(res.data))
+        .catch(err => setError(err))
+        .finally(() => setLoader(false))
+    },[])
+
+    return {data, loader, error};
+}
+export default useGetToysData

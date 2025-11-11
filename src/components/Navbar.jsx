@@ -48,7 +48,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-[#faf7ef] shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -75,14 +75,14 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn-ghost cursor-pointer text-xl">Toyzy</a>
+        <a className="btn-ghost cursor-pointer text-3xl font-bold ml-4">Toyzy</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end mr-2">
         {loading ? (
-          <BounceLoader color="#254444" size={40} />
+          <BounceLoader color="#f32222" size={40} />
         ) : user ? (
           <div className="btn-ghost">
             <div className="dropdown dropdown-hover dropdown-end">
@@ -105,9 +105,9 @@ const Navbar = () => {
             </div>
           </div>
         ) : (
-          <Link to="/login" className="btn btn-ghost">
+          <Link to="/login" className="btn btn-ghost bg-[#f32222] text-white">
             <FiLogIn />
-            <span>Sign In</span>
+            <span className="">Sign In</span>
           </Link>
         )}
       </div>
