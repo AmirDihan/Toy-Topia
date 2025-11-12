@@ -6,22 +6,21 @@ import ToysCard from "./../components/ToysCard";
 
 const Home = () => {
   const { data, loader } = useGetToysData();
-  if(loader)
-  console.log('home loader')
+  if (loader) console.log("home loader");
   if (loader) return <BounceLoader color="#f32222" size={40}></BounceLoader>;
   return (
-    <div className="bg-base-200">
+    <>
       {/* Hero section */}
-      <div className="w-11/12 mx-auto flex flex-col md:flex-row">
-        <div className="w-1/2 mr-10">
-          <h2 className="mt-15 text-6xl/20 font-bold text-[#f32222]">
-            Inspiring Young Minds to Dream Big
+      <div className="w-11/12 mx-auto flex flex-col justify-between items-center md:flex-row gap-2 md:gap-10">
+        <div className="w-full">
+          <h2 className="text-center text-3xl/10 md:text-5xl/20 font-bold text-[#f32222]">
+            Inspiring Young Minds <br /> to Dream Big
           </h2>
-          <h4 className="mt-6 text-3xl font-semibold">
+          <h4 className="text-center mt-2 md:mt-6 text-2xl/10 md:text-3xl font-semibold">
             "For the Little Moments That Matter"
           </h4>
         </div>
-        <div className="w-1/2">
+        <div>
           <img
             className="w-full"
             src="https://i.ibb.co.com/0WLyrCp/toys-spending-pandemic-Mattel.jpg"
@@ -31,10 +30,10 @@ const Home = () => {
       </div>
       {/* Slider section */}
       <div className="w-11/12 mx-auto mt-10">
-        <h3 className="text-4xl/16 font-bold italic text-[#f32222] text-center">
+        <h3 className="text-2xl/8 md:text-4xl/16 font-bold italic text-[#f32222] text-center">
           This Months Best Selling Toys
         </h3>
-        <div className="carousel w-full h-[800px]">
+        <div className="carousel w-full mx-auto max-h-[600px]">
           <CarouselImage
             imageURL={data[0].pictureURL}
             id={"slide1"}
@@ -62,12 +61,15 @@ const Home = () => {
         </div>
       </div>
       {/* Popular Toys */}
-      <div className="w-11/12 mx-auto grid grid-cols-3 gap-4 justify-center place-items-center">
-        {data.map((toy) => (
-          <ToysCard key={toy.toyId} toy={toy}></ToysCard>
-        ))}
+      <div className="w-11/12 mx-auto mt-5 md:mt-10">
+        <h3 className="text-2xl/8 md:text-4xl/16 font-bold italic text-[#f32222] text-center mb-5 md:mb-10">Our Popular Toys</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-center place-items-center">
+          {data.map((toy) => (
+            <ToysCard key={toy.toyId} toy={toy}></ToysCard>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

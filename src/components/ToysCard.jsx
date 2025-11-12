@@ -9,14 +9,14 @@ const ToysCard = ({ toy }) => {
     navigate(`/toys/${toy.toyId}`);
   };
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-      <figure>
+    <div className="card bg-base-100 w-full shadow-sm">
+      <figure className="p-4">
         <img src={toy.pictureURL} alt="Shoes" className="h-[300px] w-[400px]" />
       </figure>
       <div className="card-body">
         <h2 className="card-title justify-between">
           {toy.toyName}
-          <div className="badge bg-[#f32222] text-white">{toy.subCategory}</div>
+          <div className="badge bg-[#03981a] text-white">{toy.subCategory}</div>
         </h2>
         <div className="grid grid-cols-2">
           <p className="flex gap-2 items-center text-xl font-medium">

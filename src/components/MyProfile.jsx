@@ -23,8 +23,8 @@ const MyProfile = () => {
       });
   };
   return (
-    <div className="bg-base-200">
-      <div className="hero-content flex-col lg:flex-row">
+    <div className=" flex flex-col space-y-10 max-w-[1200px]">
+      <div className="hero-content flex-col lg:flex-row w-full">
         <img
           src={user.photoURL}
           alt="user photo"
@@ -35,7 +35,7 @@ const MyProfile = () => {
           <p className="py-6">{user.email}</p>
         </div>
       </div>
-      <div className="hero-content flex justify-center items-center w-full">
+      <div className="hero-content flex flex-col md:flex-row justify-center items-center w-full">
         <h3 className="text-3xl font-bold">
           Update your <br /> profile information
         </h3>

@@ -10,16 +10,18 @@ const ToyDetails = () => {
   const { data, loader } = useGetToysData();
   const toy = data.find((t) => id == t.toyId);
   const handleTryNow = (e) => {
-    console.log(e)
+    console.log(e);
     // e.target.reset();
-    toast.success('You can try the toy now');
+    toast.success("You can try the toy now");
+  };
+  if (loader) {
+    console.log("toyDetails loader");
   }
-  if(loader){console.log('toyDetails loader')}
   return loader ? (
     <DotLoader color="#f32222" size={40} />
   ) : (
-    <div>
-      <div className="card lg:card-side bg-base-100 shadow-sm">
+    <div className="p-5">
+      <div className="p-5 rounded-2xl card lg:card-side bg-base-100 shadow-sm">
         <figure>
           <img src={toy.pictureURL} alt="Album" className="max-w-[400px]" />
         </figure>
@@ -44,6 +46,9 @@ const ToyDetails = () => {
         </div>
       </div>
       <div className="flex flex-col items-center mt-10">
+        <h2 className="text-right text-xl font-medium mb-5">
+          Fill Up The Form To Try This Toy
+        </h2>
         <form onSubmit={handleTryNow} className="w-1/2">
           <fieldset className="flex flex-col">
             <label className="label">Name</label>
@@ -62,11 +67,9 @@ const ToyDetails = () => {
               placeholder="Email"
               required
             />
-              <button
-                className="btn btn-outline text-white bg-[#f32222] mt-2"
-              >
-                Try Now
-              </button>
+            <button className="btn btn-outline text-white bg-[#f32222] mt-2">
+              Try Now
+            </button>
           </fieldset>
         </form>
       </div>
