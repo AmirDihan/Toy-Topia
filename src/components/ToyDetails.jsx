@@ -10,13 +10,11 @@ const ToyDetails = () => {
   const { data, loader } = useGetToysData();
   const toy = data.find((t) => id == t.toyId);
   const handleTryNow = (e) => {
-    console.log(e);
-    // e.target.reset();
+    // console.log(e);
+    e.preventDefault();
+    e.target.reset();
     toast.success("You can try the toy now");
   };
-  if (loader) {
-    console.log("toyDetails loader");
-  }
   return loader ? (
     <DotLoader color="#f32222" size={40} />
   ) : (

@@ -6,9 +6,10 @@ import ToysCard from "./../components/ToysCard";
 
 const Home = () => {
   const { data, loader } = useGetToysData();
-  if (loader) console.log("home loader");
   if (loader) return <BounceLoader color="#f32222" size={40}></BounceLoader>;
-  return (
+  return loader ? (
+    <BounceLoader color="#f32222" size={40}></BounceLoader>
+  ) : (
     <>
       {/* Hero section */}
       <div className="w-11/12 mx-auto flex flex-col justify-between items-center md:flex-row gap-2 md:gap-10">
@@ -62,7 +63,9 @@ const Home = () => {
       </div>
       {/* Popular Toys */}
       <div className="w-11/12 mx-auto mt-5 md:mt-10">
-        <h3 className="text-2xl/8 md:text-4xl/16 font-bold italic text-[#f32222] text-center mb-5 md:mb-10">Our Popular Toys</h3>
+        <h3 className="text-2xl/8 md:text-4xl/16 font-bold italic text-[#f32222] text-center mb-5 md:mb-10">
+          Our Popular Toys
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-center place-items-center">
           {data.map((toy) => (
             <ToysCard key={toy.toyId} toy={toy}></ToysCard>

@@ -14,7 +14,7 @@ const Navbar = () => {
         setUser(null);
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
         toast.error(error.message);
       });
   };

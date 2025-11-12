@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   const { sendPasswordResetEmailFunc } = useContext(AuthContext);
 
@@ -18,7 +18,7 @@ const ForgetPassword = () => {
 
   const handleResetPassword = (e) => {
     e.preventDefault();
-    console.log("pass");
+    // console.log("pass");
     sendPasswordResetEmailFunc(email)
       .then(() => {
         toast.success("Password reset email sent! Redirecting to Gmail...");
@@ -38,14 +38,14 @@ const ForgetPassword = () => {
               name="email"
               value={email}
               onChange={(e) => {
-                console.log(e.target.value);
+                // console.log(e.target.value);
                 setEmail(e.target.value);
               }}
               placeholder="Email"
             />
             <button
               onClick={(e) => {
-                console.log("reset btn clicked");
+                // console.log("reset btn clicked");
                 handleResetPassword(e);
               }}
               className="btn btn-neutral mt-4"
