@@ -11,6 +11,12 @@ The purpose of **Toyzy** is to create a fun, interactive, and educational toy st
 
 ---
 
+## 🌐 Live Demo
+
+👉 **Live Site URL:** [https://toy-topia-firebase-auth-12712.web.app/](https://toy-topia-firebase-auth-12712.web.app/)  
+
+---
+
 ## 🚀 Key Features
 
 - 🔐 **Firebase Authentication**
