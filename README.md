@@ -25,13 +25,16 @@ The purpose of **Toyzy** is to create a fun, interactive, and educational toy st
   - Persistent user session even after reload.
 
 - 🧭 **Private Routes**
-  - Access restriction for certain routes (like “My Toys”) until login.
+  - Access restriction for certain routes (like “Wishlist”, "My Profile") until login.
 
 - 🧸 **Dynamic Toy Display**
   - Toy data displayed dynamically using responsive grid layout.
 
 - ⭐ **Detailed Toy View**
   - Each toy page shows detailed information such as price, rating, and description.
+
+- 💖 **Wishlist**
+  - Users can save their favorite toys to a personal list for easy access later by using local storage.
 
 - 🧠 **Password Reset**
   - “Forgot Password” page allows users to reset via email link.
@@ -120,6 +123,7 @@ The purpose of **Toyzy** is to create a fun, interactive, and educational toy st
     │ │ ├── Home.jsx
     │ │ ├── Login.jsx
     │ │ └── Register.jsx
+    │ │ └── Wishlist.jsx
     │ ├── privateRoute/
     │ │ └── PrivateRoute.jsx
     │ ├── routes/

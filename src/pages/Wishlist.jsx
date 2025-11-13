@@ -33,9 +33,9 @@ const Wishlist = () => {
               <p>${toy.price}</p>
               <button
                 onClick={() => handleRemove(toy.toyId)}
-                className="btn btn-sm btn-error mt-3 flex items-center gap-1"
+                className="btn mt-3 flex items-center gap-1"
               >
-                <FaTrash /> Remove
+                <FaTrash color="#f32222"/> Remove
               </button>
             </div>
           ))}

@@ -17,7 +17,7 @@ const ToysCard = ({ toy }) => {
     let savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     if (isWishlisted) {
       savedWishlist = savedWishlist.filter((item) => item.toyId !== toy.toyId);
-      toast.info("Removed from wishlist");
+      toast.error("Removed from wishlist");
     } else {
       savedWishlist.push(toy);
       toast.success("Added to wishlist");
