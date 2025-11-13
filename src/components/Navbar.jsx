@@ -45,6 +45,18 @@ const Navbar = () => {
           My Profile
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/wishlist"
+          className={({ isActive }) =>
+            isActive
+              ? "text-xl font-semibold text-[#7546e2]"
+              : "text-xl font-semibold"
+          }
+        >
+          Wishlist
+        </NavLink>
+      </li>
     </>
   );
   return (

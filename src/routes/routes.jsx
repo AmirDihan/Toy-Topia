@@ -8,8 +8,7 @@ import PrivateRoute from "../privateRoute/PrivateRoute";
 import ForgetPassword from "../pages/ForgetPassword";
 import ErrorPage from "../pages/ErrorPage";
 import ToyDetails from "../components/ToyDetails";
-import { Suspense } from "react";
-import { DotLoader } from "react-spinners";
+import Wishlist from "../pages/Wishlist";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +44,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ToyDetails></ToyDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "wishlist",
+        element: (
+          <PrivateRoute>
+            <Wishlist></Wishlist>
           </PrivateRoute>
         ),
       },
